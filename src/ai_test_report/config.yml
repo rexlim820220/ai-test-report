@@ -1,0 +1,10 @@
+# src/ai_test_report/config.yml
+project: ai_test_report
+author: 和碩
+test_case_dir: tests
+report:
+  html_dir: src/ai_test_report/reports/
+  excel_dir: src/ai_test_report/reports/
+  chart_template: src/ai_test_report/reports/chart_template.html
+language: zh-tw
+
