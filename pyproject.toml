@@ -1,0 +1,40 @@
+[project]
+name = "ai_test_report"
+version = "0.1.0"
+description = "A visual test automation report system using Pytest, pandas, Jinja2, and Chart.js"
+authors = [
+  { name = "Pegatron System Integration Testing Team", email = "team@example.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+  "pytest",
+  "pytest-html",
+  "pandas",
+  "openpyxl",
+  "jinja2"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License"
+]
+
+[project.scripts]
+ai_test_report = "ai_test_report.__main__:main"
+
+[tool.bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version} skip ci"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"setup.cfg" = [ "{version}" ]
+"pyproject.toml" = [ 'version = "{version}"' ]
+"src/ai_test_report/__init__.py" = [ '__version__ = "{version}"' ]
+"src/ai_test_report/basic/__init__.py" = [ '__version__ = "{version}"' ]

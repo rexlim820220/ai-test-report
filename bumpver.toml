@@ -1,0 +1,25 @@
+[bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version} skip ci"
+commit = true
+tag = true
+push = true
+
+[bumpver.file_patterns]
+
+"setup.cfg" = [
+    "{version}",
+]
+
+"bumpver.toml" = [
+    'current_version = "{version}"',
+]
+
+"src/ai_test_report/__init__.py" = [
+    '__version__ = "{version}"',
+]
+
+"src/ai_test_report/basic/__init__.py" = [
+    '__version__ = "{version}"',
+]

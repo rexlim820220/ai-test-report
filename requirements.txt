@@ -1,0 +1,6 @@
+pytest
+pandas
+html-testRunner
+openpyxl
+jinja2
+pyyaml
