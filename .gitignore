@@ -3,7 +3,7 @@ __pycache__/
 *.egg-info/
 *.log
 .venv/
-.env/
+.env
 env/
 venv/
 .pytest_cache/
@@ -15,9 +15,9 @@ report.xml
 build/
 dist/
 *.whl
-src/ai_test_report/reports/test_report*.html
-src/ai_test_report/reports/test_results*.xlsx
-src/ai_test_report/reports/chart_*.html
+**/test_report*.html
+**/test_results*.xlsx
+**/chart_2025*.html
 temp_*.py
 logs/
 log/

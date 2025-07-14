@@ -4,3 +4,5 @@ html-testRunner
 openpyxl
 jinja2
 pyyaml
+requests
+python-dotenv

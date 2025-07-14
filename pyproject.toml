@@ -13,7 +13,9 @@ dependencies = [
   "pytest-html",
   "pandas",
   "openpyxl",
-  "jinja2"
+  "jinja2",
+  "requests",
+  "python-dotenv"
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
