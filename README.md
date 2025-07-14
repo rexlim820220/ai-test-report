@@ -12,7 +12,6 @@ This project aims to integrate tools like Pytest, pandas, Jinja2, and Chart.js t
 ai_test_report/
 ├── .git/
 ├── .gitignore
-├── .gitlab-ci.yml
 ├── README.md
 ├── pyproject.toml
 ├── requirements.txt
@@ -95,6 +94,17 @@ This will:
 - CI workflow: Refer to `.gitlab-ci.yml`
 - Customize report appearance: Edit `chart_template.html`
 - Write test cases: Add new `test_*.py` files under the `tests/` directory
+
+## Environment Variables
+
+Note: To launch and build ai_test_report properly, define the following variables in your `.env` file:
+
+- `GITLAB_TOKEN`: Personal access token for GitLab API
+- `GITLAB_URL`: Base URL of your GitLab instance
+- `GITLAB_VERIFY_SSL`: Set to true or false to enable/disable SSL verification
+- `GITLAB_USER`: GitLab username for authentication
+
+If these variables are missing, the CLI may fail to connect to GitLab or generate reports. Create your own `.env` file with these values before running the tool.
 
 ---
 

@@ -62,8 +62,8 @@ def main():
     chart_path = REPORT_DIR / f"chart_{timestamp}.html"
 
     try:
-        user_mrs = get_user_merge_requests()
-        logger.info(f"Amount of merge requests for user : {len(user_mrs)}")
+        user_name, user_mrs = get_user_merge_requests()
+        logger.info(f"Amount of merge requests for user {user_name}: {len(user_mrs)}")
     except Exception as e:
         logger.warning(f"Access GitLab merge request data failed: {e}")
 

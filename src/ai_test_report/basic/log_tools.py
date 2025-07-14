@@ -15,4 +15,5 @@ def setup_logger(name="ai_test_report", level=logging.INFO):
         stream_handler.setFormatter(formatter)
         logger.setLevel(level)
         logger.addHandler(stream_handler)
+        logger.propagate = False
     return logger

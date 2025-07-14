@@ -22,9 +22,9 @@ def get_user_merge_requests():
 
     response = requests.get(url, headers=HEADERS, verify=verify_ssl)
     if response.status_code == 200:
-        return response.json()
+        return GITLAB_USER, response.json()
     else:
-        return {"error": response.text}
+        return GITLAB_USER, {"error": response.text}
 
 def get_project_pipeline_stats(project_id):
     """Get the pipeline success rate information of the specified project""" 
