@@ -1,6 +1,10 @@
 # AI Test Report
 
-This project aims to integrate tools like Pytest, pandas, Jinja2, and Chart.js to create a visualized automated testing report system. It helps software teams quickly understand test results and share knowledge effectively.
+AI Test Report is a command-line testing suite built to visualize team-wide GitLab contribution metrics using `Python`, `Chart.js`, `Jinja2`, and `Pytest`.
+
+This project was developed to support internal reporting for technical departments and demonstrate AI-assisted data processing and visualization. It automates the execution and summarization of test cases while integrating GitLab REST API data such as CI/CD pipeline success rates and Merge Request activity.
+
+This project aims to integrate tools like Pytest, pandas, Jinja2, and Chart.js to create a visualized automated testing report system. It helps Pegatron developers quickly understand test results and share knowledge effectively.
 
 ## Project Directory Structure
 
@@ -19,14 +23,12 @@ ai_test_report/
 │       ├── __init__.py
 │       ├── __main__.py         ← Main entry point (can be executed via CLI)
 │       ├── config.yml          ← Configuration file for reports and resources
-│       ├── fun.py              ← Feature module
 │       └── basic/              ← Utility functions
-│           ├── __init__.py
-│           ├── common_tools.py
-│           ├── err_tools.py
-│           ├── log_tools.py
-│       ├── resources/
-│           └── chart.js
+│          ├── __init__.py
+│          ├── common_tools.py
+│          ├── err_tools.py
+│          ├── log_tools.py
+│          └── gitlab_tools.py
 │       ├── reports/
 │           ├── test_results.xlsx
 │           ├── test_report.html
@@ -35,6 +37,7 @@ ai_test_report/
 │   ├── test_login.py
 │   ├── test_write.py
 │   ├── test_view.py
+│   └── test_gitlab_tools.py
 ├── reports/
 ```
 
@@ -95,7 +98,7 @@ This will:
 
 ---
 
-## Contact
+## Authors and acknowledgment
 
-This project is developed by the Pegatron System Integration Testing Team. If you have any questions, suggestions, or contributions, feel free to reach out to us!
+This project is developed by Pegatron Technology Group. All rights reserved.
 
