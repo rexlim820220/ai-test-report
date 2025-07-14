@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test result statistics chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2b2b2b;
+    }
+    .chart-container {
+      width: 50%;
+      margin: 0 auto;
+    }
+    .info-box {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test Result Statistics</h1>
+  <div class="chart-container">
+    <canvas id="testChart"></canvas>
+  </div>
+  <div class="info-box">
+    <p>Pass count: <strong>{{ pass_count }}</strong></p>
+    <p>Fail count: <strong>{{ fail_count }}</strong></p>
+  </div>
+
+  <script>
+    const ctx = document.getElementById("testChart").getContext("2d");
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Pass", "Fail"],
+        datasets: [{
+          data: [{{ pass_count }}, {{ fail_count }}],
+          backgroundColor: ["#3cb371", "#f0625f"],
+          borderColor: ["#ffffff", "#ffffff"],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom"
+          },
+          title: {
+            display: true,
+            text: "Test Result Distribution"
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
