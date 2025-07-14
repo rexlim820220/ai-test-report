@@ -7,6 +7,7 @@ from pathlib import Path
 from jinja2 import Template
 from datetime import datetime
 from ai_test_report.basic import setup_logger
+from ai_test_report.basic import get_user_merge_requests
 
 logger = setup_logger()
 
@@ -59,6 +60,12 @@ def main():
     html_path = REPORT_DIR / f"test_report_{timestamp}.html"
     excel_path = REPORT_DIR / f"test_results_{timestamp}.xlsx"
     chart_path = REPORT_DIR / f"chart_{timestamp}.html"
+
+    try:
+        user_mrs = get_user_merge_requests()
+        logger.info(f"Amount of merge requests for user : {len(user_mrs)}")
+    except Exception as e:
+        logger.warning(f"Access GitLab merge request data failed: {e}")
 
     run_pytest(html_path)
     generate_summary(excel_path, chart_path, config["test_case_dir"])
