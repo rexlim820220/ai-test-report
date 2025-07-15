@@ -1,66 +1,119 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-  <meta charset="UTF-8" />
-  <title>Test result statistics chart</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 40px;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #2b2b2b;
-    }
-    .chart-container {
-      width: 50%;
-      margin: 0 auto;
-    }
-    .info-box {
-      text-align: center;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Test Result Statistics</h1>
-  <div class="chart-container">
-    <canvas id="testChart"></canvas>
-  </div>
-  <div class="info-box">
-    <p>Pass count: <strong>{{ pass_count }}</strong></p>
-    <p>Fail count: <strong>{{ fail_count }}</strong></p>
-  </div>
-
-  <script>
-    const ctx = document.getElementById("testChart").getContext("2d");
-    new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Pass", "Fail"],
-        datasets: [{
-          data: [{{ pass_count }}, {{ fail_count }}],
-          backgroundColor: ["#3cb371", "#f0625f"],
-          borderColor: ["#ffffff", "#ffffff"],
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "bottom"
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test result statistics chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 40px;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #2b2b2b;
+      }
+      .chart-container {
+        width: 50%;
+        margin: 0 auto;
+      }
+      .info-box {
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test Result Statistics</h1>
+    <div class="chart-container">
+      <canvas id="barChart" width="400" height="300"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="pipelineChart" width="400" height="300"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="doughnutChart" width="400" height="300"></canvas>
+    </div>
+    <div class="info-box">
+      <p>Pass count: <strong>{{ pass_count }}</strong></p>
+      <p>Fail count: <strong>{{ fail_count }}</strong></p>
+    </div>
+    <script>
+      const barCtx = document.getElementById("barChart").getContext("2d");
+      new Chart(barCtx, {
+        type: "bar",
+        data: {
+          labels: {{ user_labels | tojson }},
+          datasets: [{
+            label: "Merge Requests",
+            data: {{ user_values | tojson }},
+            backgroundColor: "#4287f5"
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: "Merge Request Activity by Team Member"
+            }
           },
-          title: {
-            display: true,
-            text: "Test Result Distribution"
+          scales: {
+            y: { beginAtZero: true }
           }
         }
-      }
-    });
-  </script>
-</body>
+      });
+
+      const pipeCtx = document.getElementById("pipelineChart").getContext("2d");
+      new Chart(pipeCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Success", "Failed", "Canceled", "Others"],
+          datasets: [{
+            data: [{{ pipeline_success }}, {{ pipeline_failed }}, {{ pipeline_canceled }}, {{ pipeline_others }}],
+            backgroundColor: ["#3cb371", "#f0625f", "#ffd700", "#d3d3d3"],
+            borderColor: "#ffffff",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: "bottom" },
+            title: {
+              display: true,
+              text: "CI/CD Pipeline Status Distribution"
+            }
+          }
+        }
+      });
+
+      const donutCtx = document.getElementById("doughnutChart").getContext("2d");
+      new Chart(donutCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Pass", "Fail"],
+          datasets: [{
+            data: [{{ pass_count }}, {{ fail_count }}],
+            backgroundColor: ["#3cb371", "#f0625f"],
+            borderColor: ["#ffffff", "#ffffff"],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: "bottom" },
+            title: {
+              display: true,
+              text: "Test Result Distribution"
+            }
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
