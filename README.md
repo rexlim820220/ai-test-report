@@ -101,8 +101,7 @@ Note: To launch and build ai_test_report properly, define the following variable
 
 - `GITLAB_TOKEN`: Personal access token for GitLab API
 - `GITLAB_URL`: Base URL of your GitLab instance
-- `GITLAB_VERIFY_SSL`: Set to true or false to enable/disable SSL verification
-- `GITLAB_USER`: GitLab username for authentication
+- `GITLAB_GROUP_ID`: Label used in GitLab to represent a specific group
 
 If these variables are missing, the CLI may fail to connect to GitLab or generate reports. Create your own `.env` file with these values before running the tool.
 
