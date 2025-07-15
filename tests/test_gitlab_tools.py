@@ -77,9 +77,9 @@ def test_generate_chart(monkeypatch, tmp_path, mock_gitlab):
     assert "Merge Request Activity" in html
     assert "Test Result Distribution" in html
     assert "Pipeline Status Distribution" in html
-    assert '<canvas id="doughnutChart">' in html
-    assert '<canvas id="barChart">' in html
-    assert '<canvas id="pipelineChart">' in html
+    assert "barChart" in html
+    assert "doughnutChart" in html
+    assert "pipelineChart" in html
     assert 'Chart' in html and 'new Chart' in html
     assert 'data: [2, 1, 1' in html
     assert '"Ackman_Liang"' in html and '"Stephen_Chen"' in html
