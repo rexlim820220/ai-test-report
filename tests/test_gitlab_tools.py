@@ -77,6 +77,14 @@ def test_generate_chart(monkeypatch, tmp_path, mock_gitlab):
     assert "Merge Request Activity" in html
     assert "Test Result Distribution" in html
     assert "Pipeline Status Distribution" in html
+    assert '<canvas id="doughnutChart">' in html
+    assert '<canvas id="barChart">' in html
+    assert '<canvas id="pipelineChart">' in html
+    assert 'Chart' in html and 'new Chart' in html
+    assert 'data: [2, 1, 1' in html
+    assert '"Ackman_Liang"' in html and '"Stephen_Chen"' in html
+    assert f"data: [{member_mr_dict['Ackman_Liang']}, {member_mr_dict['Stephen_Chen']}" in html
+    assert f"data: [1, 1]" in html or f"data: [1, 1" in html
 
 def test_missing_gitlab_config(monkeypatch):
     monkeypatch.setenv("GITLAB_URL", "")

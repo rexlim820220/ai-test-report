@@ -1,7 +1,6 @@
 # src/ai_test_report/__main__.py
 
 import yaml
-import pytest
 import pandas as pd
 from pathlib import Path
 from jinja2 import Template
@@ -19,14 +18,6 @@ def load_config():
     config_path = Path(__file__).parent / "config.yml"
     with open(config_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
-
-def run_pytest(html_path):
-    logger.info("Starting test execution")
-    pytest.main([
-        'tests',
-        '--html=' + str(html_path),
-        '--self-contained-html'
-    ])
 
 def generate_summary(excel_path, chart_path, result_dir, member_mr_dict, pipeline_stats):
     logger.info("Generate visual test summaries and graphs")
@@ -113,7 +104,6 @@ def main():
     except Exception as e:
         logger.warning(f"Access GitLab data failed: {e}")
 
-    run_pytest(html_path)
     generate_summary(excel_path, chart_path, config["test_case_dir"], member_mr_dict, pipeline_stats)
 
     logger.info("Test report completed")

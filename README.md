@@ -56,7 +56,7 @@ source .venv/bin/activate
 Using `requirements.txt`:
 
 ```bash
-pip install -r requirements.txt
+(.venv) pip install -r requirements.txt
 ```
 
 Or use `pyproject.toml` with tools like `pipx`, `hatch`, or `poetry`.
@@ -66,19 +66,35 @@ Or use `pyproject.toml` with tools like `pipx`, `hatch`, or `poetry`.
 Install the package into `.venv` with:
 
 ```bash
-pip install -e .
+(.venv) pip install -e .
 ```
 
 Now you can run the command directly:
 
 ```bash
-ai_test_report
+(.venv) ai_test_report
 ```
 
 This will:
 - Execute test cases
 - Aggregate test results
 - Generate an HTML test report, Excel summary, and Chart.js visual report
+
+### 4. Run Unit Tests with Pytest
+
+To validate offline components or simulate GitLab data responses, run:
+
+```bash
+(.venv) pytest tests/test_gitlab_tools.py --html=chart_test_report.html --self-contained-html
+```
+
+This test will:
+
+- Use monkeypatch to mock GitLab group members, user MR data, and pipeline status
+- Generate a realistic `chart_test_report.html` report containing:
+  - Test result doughnut chart
+  - Team Merge Request contribution bar chart
+  - CI/CD pipeline status distribution chart
 
 ## Additional Support
 
