@@ -63,13 +63,6 @@ Or use `pyproject.toml` with tools like `pipx`, `hatch`, or `poetry`.
 
 ### 3. Compile and Register CLI Command in `.venv`
 
-If your `pyproject.toml` includes:
-
-```toml
-[project.scripts]
-ai_test_report = "ai_test_report.__main__:main"
-```
-
 Install the package into `.venv` with:
 
 ```bash
@@ -87,11 +80,8 @@ This will:
 - Aggregate test results
 - Generate an HTML test report, Excel summary, and Chart.js visual report
 
----
-
 ## Additional Support
 
-- CI workflow: Refer to `.gitlab-ci.yml`
 - Customize report appearance: Edit `chart_template.html`
 - Write test cases: Add new `test_*.py` files under the `tests/` directory
 
@@ -104,8 +94,6 @@ Note: To launch and build ai_test_report properly, define the following variable
 - `GITLAB_GROUP_ID`: Label used in GitLab to represent a specific group
 
 If these variables are missing, the CLI may fail to connect to GitLab or generate reports. Create your own `.env` file with these values before running the tool.
-
----
 
 ## Authors and acknowledgment
 
