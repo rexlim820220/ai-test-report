@@ -6,45 +6,47 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_user_merge_requests():
-    """Get the number of Merge Request activities of the user"""
-    GITLAB_URL = os.getenv("GITLAB_URL")
-    GITLAB_USER = os.getenv("GITLAB_USER")
-    GITLAB_TOKEN = os.getenv("GITLAB_TOKEN")
+class GitLabClient:
+    def __init__(self):
+        self.base_url = os.getenv("GITLAB_URL")
+        self.token = os.getenv("GITLAB_TOKEN")
+        self.group_id = os.getenv("GITLAB_GROUP_ID")
+        self.headers = {"PRIVATE-TOKEN": self.token}
+        self.project_id = os.getenv("GITLAB_PROJECT_ID")
 
-    assert GITLAB_URL , "GitLab URL config is missing"
-    assert GITLAB_USER, "GitLab user config is missing"
-    assert GITLAB_TOKEN , "GitLab token config is missing"
+        assert self.base_url, "GitLab URL config is missing"
+        assert self.token   , "GitLab token config is missing"
+        assert self.group_id, "GitLab GROUPID config is missing"
+        assert self.project_id, "GitLab PROJECTID config is missing"
 
-    HEADERS = {"PRIVATE-TOKEN": GITLAB_TOKEN}
-    verify_ssl = os.getenv("GITLAB_VERIFY_SSL", "true").lower() == "true"
-    url = f"{GITLAB_URL}/merge_requests?author_username={GITLAB_USER}&scope=all"
+    def get_group_members(self):
+        """Get the member list of the entire GitLab group"""
+        url = f"{self.base_url}/groups/{self.group_id}/members/all"
+        response = requests.get(url, headers=self.headers, verify=False)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise RuntimeError(f"GitLab group member fetch failed: {response.status_code} → {response.text}")
 
-    response = requests.get(url, headers=HEADERS, verify=verify_ssl)
-    if response.status_code == 200:
-        return GITLAB_USER, response.json()
-    else:
-        return GITLAB_USER, {"error": response.text}
+    def get_user_merge_requests(self, user):
+        """Get the number of Merge Request activities of the user"""
 
-def get_project_pipeline_stats(project_id):
-    """Get the pipeline success rate information of the specified project""" 
-    GITLAB_URL = os.getenv("GITLAB_URL")
-    GITLAB_USER = os.getenv("GITLAB_USER")
-    GITLAB_TOKEN = os.getenv("GITLAB_TOKEN")
+        url = f"{self.base_url}/merge_requests?author_username={user}&scope=all"
+        response = requests.get(url, headers=self.headers, verify=False)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": response.text}
 
-    assert GITLAB_URL , "GitLab URL config is missing"
-    assert GITLAB_USER, "GitLab user config is missing"
-    assert GITLAB_TOKEN , "GitLab token config is missing"
+    def get_project_pipeline_stats(self):
+        """Get the pipeline success rate information of the specified project"""
 
-    HEADERS = {"PRIVATE-TOKEN": GITLAB_TOKEN}
-    verify_ssl = os.getenv("GITLAB_VERIFY_SSL", "true").lower() == "true"
-    url = f"{GITLAB_URL}/projects/{project_id}/pipelines"
-
-    response = requests.get(url, headers=HEADERS, verify=verify_ssl)
-    if response.status_code == 200:
-        pipelines = response.json()
-        success = sum(1 for p in pipelines if p["status"] == "success")
-        failed = sum(1 for p in pipelines if p["status"] == "failed")
-        return {"success": success, "failed": failed, "total": len(pipelines)}
-    else:
-        return {"error": response.text}
+        url = f"{self.base_url}/projects/{self.project_id}/pipelines"
+        response = requests.get(url, headers=self.headers, verify=False)
+        if response.status_code == 200:
+            pipelines = response.json()
+            success = sum(1 for p in pipelines if p["status"] == "success")
+            failed = sum(1 for p in pipelines if p["status"] == "failed")
+            return {"success": success, "failed": failed, "total": len(pipelines)}
+        else:
+            return {"error": response.text}
